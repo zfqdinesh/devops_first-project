@@ -1,9 +1,13 @@
-from flask import Flask 
+from flask import Flask
+
+# instance of flask application
 app = Flask(__name__)
 
-app.route('/' ,methods=['GET'])
-def show():
-    return "hello world dinesh is here ...."
+# home route that returns below text when root url is accessed
+@app.route("/")
+def hello_world():
+    return "<p>hello ia m dinesh here .....</p>"
 
-if __name__=="__main__":
-          app.run()
+
+if __name__ == '__main__':  
+   app.run()  
