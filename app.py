@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # home route that returns below text when root url is accessed
 @app.route("/")
-def hello_world():
+def show():
     return "<p>hello ia m dinesh here .....</p>"
 
 
