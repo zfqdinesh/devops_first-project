@@ -1,539 +1,502 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Clone</title>
+    <title>Our Love Journey</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;700&display=swap'); /* Fallback will be sans-serif */
-
-        :root {
-            --netflix-red: #E50914;
-            --dark-background: #141414;
-            --text-color: #E5E5E5;
-            --light-grey: #AFAFAF;
-            --font-stack: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body {
-            height: 100%;
-        }
-
+        /* General styles */
         body {
-            font-family: var(--font-stack);
-            background-color: var(--dark-background);
-            color: var(--text-color);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(to bottom, #fce4ec, #f8bbd0); /* Soft pink gradient */
+            color: #333;
             line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scroll from rows */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        a {
-            color: var(--text-color);
-            text-decoration: none;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
+        header {
+            background-color: #e91e63; /* Deep pink */
+            color: white;
+            padding: 1.5rem 0;
             width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Georgia', serif; /* Elegant serif */
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #d81b60; /* Darker deep pink */
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-family: 'Georgia', serif;
+            font-size: 1.8rem;
+        }
+
+        /* Navigation styles */
+        nav {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 60px;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0));
-            transition: background-color 0.3s ease;
-        }
-
-        .header.scrolled {
-            background-color: var(--dark-background);
-        }
-
-        .logo {
-            color: var(--netflix-red);
-            font-size: 2.2rem;
-            font-weight: 700;
-            user-select: none;
-        }
-
-        .nav-links ul {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--light-grey);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-actions svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--text-color);
-            cursor: pointer;
-        }
-        
-        .profile-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 4px;
-            background-color: #888; /* Placeholder for profile image */
-            cursor: pointer;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: center;
+            background-color: #fce4ec; /* Lighter pink */
+            padding: 0.8rem;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background-color: #ff80ab; /* Medium pink */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Hero Section */
-        .hero {
-            height: 90vh; /* Adjust as needed */
-            background-image: url('https://images.unsplash.com/photo-1542204655-b4618a8f1dd7?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            padding: 0 60px;
-            position: relative;
+        .nav-btn:hover {
+            background-color: #e91e63; /* Deep pink */
+            transform: translateY(-2px);
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(20,20,20,1) 0%, rgba(20,20,20,0) 50%, rgba(0,0,0,0.5) 100%);
+        .nav-btn.active {
+            background-color: #d81b60; /* Darker deep pink */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .hero-content {
-            z-index: 1;
-            max-width: 600px;
-        }
-
-        .hero-title {
-            font-size: 4rem;
+        /* Main content area */
+        main {
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            flex-grow: 1; /* Allows main content to expand */
         }
 
-        .hero-description {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .hero-button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .hero-button.play {
-            background-color: var(--text-color);
-            color: var(--dark-background);
-        }
-
-        .hero-button.play:hover {
-            background-color: rgba(255,255,255,0.8);
-        }
-
-        .hero-button.more-info {
-            background-color: rgba(109,109,110,0.7);
-            color: var(--text-color);
-        }
-
-        .hero-button.more-info:hover {
-            background-color: rgba(109,109,110,0.5);
-        }
-
-        .hero-button svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .hero-button.play svg {
-            fill: var(--dark-background);
-        }
-        .hero-button.more-info svg {
-            fill: var(--text-color);
-        }
-
-        /* Movie Rows */
-        .movie-row-section {
-            position: relative;
-            z-index: 50; /* Above hero section bottom gradient */
-            padding: 40px 0;
-            margin-top: -80px; /* Pull rows up to overlap hero gradient */
-        }
-
-        .movie-row {
-            margin-bottom: 40px;
-            padding-left: 60px; /* Align with header/hero padding */
-        }
-
-        .row-title {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            padding-right: 60px; /* Ensure space for title */
-        }
-
-        .row-cards {
-            display: flex;
-            overflow-x: scroll;
-            scroll-behavior: smooth;
-            padding-bottom: 15px; /* Space for scrollbar */
-            /* Hide scrollbar for WebKit browsers */
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-        }
-
-        .row-cards::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Edge */
-        }
-
-        .card {
-            flex: 0 0 auto; /* Do not grow, do not shrink, base on content */
-            width: 250px; /* Standard card width */
-            height: 375px; /* Standard 2:3 aspect ratio */
-            margin-right: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease, z-index 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-
-        .card:hover {
-            transform: scale(1.08);
-            z-index: 10; /* Bring hovered card to front */
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 40px 60px;
-            margin-top: 50px;
-            color: var(--light-grey);
-            font-size: 0.9rem;
+        .content {
+            display: none;
             text-align: center;
         }
 
-        .footer-links {
+        .content.active {
+            display: block;
+        }
+
+        /* Form elements and results */
+        .input-group {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px 40px;
-            margin-bottom: 30px;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
         }
 
-        .footer-links a {
-            color: var(--light-grey);
-            transition: color 0.3s ease;
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px 15px;
+            border: 1px solid #ff80ab;
+            border-radius: 25px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .footer-links a:hover {
-            color: var(--text-color);
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            border-color: #d81b60;
+            box-shadow: 0 0 8px rgba(216, 27, 96, 0.4);
         }
 
-        .footer p {
-            margin-top: 20px;
+        button {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 1200px) {
-            .hero-title {
-                font-size: 3.5rem;
-            }
-            .hero-description {
-                font-size: 1.1rem;
-            }
+        button:hover {
+            background-color: #c2185b;
+            transform: translateY(-2px);
         }
 
-        @media (max-width: 992px) {
-            .header, .hero, .movie-row-section {
-                padding-left: 40px;
-                padding-right: 40px;
-            }
-            .hero-title {
-                font-size: 3rem;
-            }
-            .hero-description {
-                font-size: 1rem;
-            }
-            .nav-links ul {
-                gap: 15px;
-            }
+        .result {
+            font-size: 1.3rem;
+            color: #4a148c; /* Dark purple for results */
+            font-weight: bold;
+            margin-top: 25px;
+            min-height: 30px; /* To prevent layout shift */
         }
 
+        /* Memory list specific styles */
+        #memoryList {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #memoryList li {
+            background-color: #fff3e0; /* Light orange for list items */
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+        }
+
+        #memoryList li small {
+            color: #777;
+            font-size: 0.85em;
+        }
+
+        /* Footer styles */
+        footer {
+            margin-top: auto; /* Push footer to the bottom */
+            padding: 15px 0;
+            width: 100%;
+            background-color: #e91e63;
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .header, .hero, .movie-row-section {
-                padding-left: 20px;
-                padding-right: 20px;
+            nav {
+                flex-direction: column;
+                padding: 10px;
+                gap: 5px;
             }
-            .logo {
-                font-size: 1.8rem;
+
+            .nav-btn {
+                width: 90%;
+                margin: 0 auto;
             }
-            .nav-links {
-                display: none; /* Hide main nav links on smaller screens */
+
+            main {
+                width: 95%;
+                padding: 20px;
             }
-            .hero {
-                height: 70vh;
-                padding-top: 80px; /* Make space for fixed header */
+
+            h1 {
+                font-size: 1.5rem;
             }
-            .hero-title {
-                font-size: 2.5rem;
-                margin-bottom: 15px;
+
+            h2 {
+                font-size: 1.5rem;
             }
-            .hero-description {
-                font-size: 0.9rem;
-                margin-bottom: 20px;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-            .hero-button {
+
+            button {
                 padding: 10px 20px;
                 font-size: 1rem;
             }
-            .row-title {
-                font-size: 1.3rem;
-            }
-            .card {
-                width: 180px;
-                height: 270px;
-            }
-            .footer-links {
-                gap: 10px 20px;
-            }
-        }
 
-        @media (max-width: 480px) {
-            .header {
-                padding: 15px 15px;
+            input[type="text"],
+            input[type="date"] {
+                padding: 10px 12px;
+                font-size: 0.9rem;
             }
-            .logo {
-                font-size: 1.5rem;
-            }
-            .header-actions {
-                gap: 10px;
-            }
-            .hero {
-                padding-left: 15px;
-                padding-right: 15px;
-                text-align: center;
-                justify-content: center;
-            }
-            .hero-content {
-                max-width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .hero-title {
-                font-size: 2rem;
-            }
-            .hero-description {
-                font-size: 0.8rem;
-                -webkit-line-clamp: 4;
-            }
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-            .hero-button {
-                width: 100%;
-                justify-content: center;
-            }
-            .movie-row-section {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-            .movie-row {
-                padding-left: 0;
-            }
-            .row-cards {
-                padding-left: 0;
-            }
-            .card {
-                width: 150px;
-                height: 225px;
-            }
-            .footer {
-                padding: 30px 15px;
+
+            .result {
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">NETFLIX</div>
-        <nav class="nav-links">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">TV Shows</a></li>
-                <li><a href="#">Movies</a></li>
-                <li><a href="#">New & Popular</a></li>
-                <li><a href="#">My List</a></li>
-            </ul>
-        </nav>
-        <div class="header-actions">
-            <!-- Search Icon -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19ZM11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17ZM21 21L16.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="profile-icon"></div>
-        </div>
+    <header>
+        <h1>Our Love Journey ❤️</h1>
     </header>
-
+    <nav>
+        <button class="nav-btn active" data-target="calculator">Love Calculator</button>
+        <button class="nav-btn" data-target="messages">Love Messages</button>
+        <button class="nav-btn" data-target="dates">Date Ideas</button>
+        <button class="nav-btn" data-target="countdown">Love Countdown</button>
+        <button class="nav-btn" data-target="memories">Our Memories</button>
+    </nav>
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">The Witcher</h1>
-                <p class="hero-description">Geralt of Rivia, a mutated monster-hunter for hire, journeys toward his destiny in a turbulent world where people often prove more wicked than beasts.</p>
-                <div class="hero-buttons">
-                    <button class="hero-button play">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
-                        </svg>
-                        Play
-                    </button>
-                    <button class="hero-button more-info">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="currentColor"/>
-                        </svg>
-                        More Info
-                    </button>
-                </div>
+        <!-- Love Calculator Section -->
+        <section id="calculator" class="content active">
+            <h2>Love Calculator</h2>
+            <div class="input-group">
+                <input type="text" id="name1" placeholder="Your Name">
+                <input type="text" id="name2" placeholder="Partner's Name">
+                <button id="calculateLove">Calculate Love</button>
             </div>
+            <p id="loveResult" class="result"></p>
         </section>
 
-        <section class="movie-row-section">
-            <div class="movie-row">
-                <h2 class="row-title">Trending Now</h2>
-                <div class="row-cards">
-                    <!-- Example Cards - dynamically generate or repeat -->
-                    <div class="card"><img src="https://picsum.photos/id/20/300/450" alt="Movie Poster 1" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/21/300/450" alt="Movie Poster 2" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/22/300/450" alt="Movie Poster 3" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/23/300/450" alt="Movie Poster 4" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/24/300/450" alt="Movie Poster 5" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/25/300/450" alt="Movie Poster 6" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/26/300/450" alt="Movie Poster 7" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/27/300/450" alt="Movie Poster 8" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/28/300/450" alt="Movie Poster 9" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/29/300/450" alt="Movie Poster 10" class="card-img"></div>
-                </div>
-            </div>
+        <!-- Love Messages Section -->
+        <section id="messages" class="content">
+            <h2>Love Messages</h2>
+            <button id="generateMessage">Generate Message</button>
+            <p id="loveMessage" class="result"></p>
+        </section>
 
-            <div class="movie-row">
-                <h2 class="row-title">Netflix Originals</h2>
-                <div class="row-cards">
-                    <div class="card"><img src="https://picsum.photos/id/30/300/450" alt="Movie Poster 11" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/31/300/450" alt="Movie Poster 12" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/32/300/450" alt="Movie Poster 13" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/33/300/450" alt="Movie Poster 14" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/34/300/450" alt="Movie Poster 15" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/35/300/450" alt="Movie Poster 16" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/36/300/450" alt="Movie Poster 17" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/37/300/450" alt="Movie Poster 18" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/38/300/450" alt="Movie Poster 19" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/39/300/450" alt="Movie Poster 20" class="card-img"></div>
-                </div>
-            </div>
+        <!-- Date Ideas Section -->
+        <section id="dates" class="content">
+            <h2>Date Ideas</h2>
+            <button id="generateDateIdea">Get Idea</button>
+            <p id="dateIdea" class="result"></p>
+        </section>
 
-            <div class="movie-row">
-                <h2 class="row-title">Watch It Again</h2>
-                <div class="row-cards">
-                    <div class="card"><img src="https://picsum.photos/id/40/300/450" alt="Movie Poster 21" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/41/300/450" alt="Movie Poster 22" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/42/300/450" alt="Movie Poster 23" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/43/300/450" alt="Movie Poster 24" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/44/300/450" alt="Movie Poster 25" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/45/300/450" alt="Movie Poster 26" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/46/300/450" alt="Movie Poster 27" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/47/300/450" alt="Movie Poster 28" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/48/300/450" alt="Movie Poster 29" class="card-img"></div>
-                    <div class="card"><img src="https://picsum.photos/id/49/300/450" alt="Movie Poster 30" class="card-img"></div>
-                </div>
+        <!-- Love Countdown Section -->
+        <section id="countdown" class="content">
+            <h2>Love Countdown</h2>
+            <div class="input-group">
+                <label for="targetDate">Set an important date:</label>
+                <input type="date" id="targetDate">
+                <button id="setCountdown">Set Date</button>
             </div>
+            <p id="countdownResult" class="result"></p>
+        </section>
+
+        <!-- Our Memories Section -->
+        <section id="memories" class="content">
+            <h2>Our Memories</h2>
+            <div class="input-group">
+                <input type="text" id="memoryInput" placeholder="Add a sweet memory...">
+                <button id="addMemory">Add Memory</button>
+            </div>
+            <ul id="memoryList">
+                <li>First date at the park <small>(01/15/2023)</small></li>
+                <li>That unforgettable trip to the beach <small>(07/22/2023)</small></li>
+            </ul>
         </section>
     </main>
-
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="#">Audio Description</a>
-            <a href="#">Help Center</a>
-            <a href="#">Gift Cards</a>
-            <a href="#">Media Center</a>
-            <a href="#">Investor Relations</a>
-            <a href="#">Jobs</a>
-            <a href="#">Terms of Use</a>
-            <a href="#">Privacy</a>
-            <a href="#">Legal Notices</a>
-            <a href="#">Cookie Preferences</a>
-            <a href="#">Corporate Information</a>
-            <a href="#">Contact Us</a>
-        </div>
-        <p>&copy; 2023 Netflix Clone, Inc.</p>
+    <footer>
+        <p>&copy; 2023 Made with Love</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('.header');
+        let countdownInterval;
 
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) { // Adjust scroll threshold as needed
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Restore target date if stored in localStorage
+            if (localStorage.getItem('loveCountdownTarget')) {
+                document.getElementById('targetDate').value = new Date(localStorage.getItem('loveCountdownTarget')).toISOString().split('T')[0];
+            }
+
+            // Tab switching logic
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const contentSections = document.querySelectorAll('.content');
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.dataset.target;
+
+                    // Deactivate all nav buttons and content sections
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.remove('active'));
+
+                    // Activate clicked button and corresponding content section
+                    button.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+
+                    // Special handling for countdown: start/resume when tab is opened, pause when tab is left
+                    if (targetId === 'countdown') {
+                        startCountdown();
+                    } else if (countdownInterval) {
+                        clearInterval(countdownInterval); // Clear interval if leaving countdown tab
+                    }
+                });
             });
+
+            // Simulate click on the first nav button to show its content on page load
+            document.querySelector('.nav-btn').click();
+
+            // Function specific event listeners
+            document.getElementById('calculateLove').addEventListener('click', calculateLove);
+            document.getElementById('generateMessage').addEventListener('click', generateLoveMessage);
+            document.getElementById('generateDateIdea').addEventListener('click', generateDateIdea);
+            document.getElementById('setCountdown').addEventListener('click', setCountdown);
+            document.getElementById('addMemory').addEventListener('click', addMemory);
         });
+
+        // Function 1: Love Calculator
+        function calculateLove() {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+            const loveResult = document.getElementById('loveResult');
+
+            if (!name1 || !name2) {
+                loveResult.textContent = "Please enter both names!";
+                return;
+            }
+
+            // Simple "hashing" for a playful percentage
+            const combinedNames = (name1 + name2).toLowerCase();
+            let loveScore = 0;
+            for (let i = 0; i < combinedNames.length; i++) {
+                loveScore += combinedNames.charCodeAt(i);
+            }
+
+            const percentage = (loveScore % 101); // Percentage between 0-100
+
+            let message = `The love percentage between ${name1} and ${name2} is ${percentage}%! `;
+
+            if (percentage >= 80) {
+                message += "A perfect match! ❤️";
+            } else if (percentage >= 50) {
+                message += "A strong connection! 🥰";
+            } else {
+                message += "Keep working on it! 😉";
+            }
+            loveResult.textContent = message;
+        }
+
+        // Function 2: Love Message Generator
+        const loveMessages = [
+            "You are my sunshine, my only sunshine.",
+            "Every moment with you is a treasure.",
+            "My heart belongs to you, always and forever.",
+            "I fall in love with you more every single day.",
+            "You make my world a beautiful place.",
+            "You're the missing piece to my puzzle.",
+            "Being with you feels like home.",
+            "I never knew what love was until I met you.",
+            "You're simply the best.",
+            "Forever grateful for you.",
+            "You complete me.",
+            "My love for you grows stronger with each passing day.",
+            "You are my greatest adventure."
+        ];
+
+        function generateLoveMessage() {
+            const loveMessageElem = document.getElementById('loveMessage');
+            const randomIndex = Math.floor(Math.random() * loveMessages.length);
+            loveMessageElem.textContent = loveMessages[randomIndex];
+        }
+
+        // Function 3: Date Idea Generator
+        const dateIdeas = [
+            "Have a romantic picnic in the park.",
+            "Cook a new recipe together at home.",
+            "Go for a scenic hike or nature walk.",
+            "Have a board game night with snacks.",
+            "Visit a local museum or art gallery.",
+            "Go stargazing on a clear night.",
+            "Build a fort and watch a movie inside it.",
+            "Have a themed movie marathon night.",
+            "Go rollerblading or ice skating.",
+            "Visit a local farmers market and cook a meal with your findings.",
+            "Have a DIY spa night at home.",
+            "Go for a bike ride along a scenic trail.",
+            "Attend a live music event or concert.",
+            "Have a cozy coffee shop date.",
+            "Go fruit picking (seasonal).",
+            "Try a virtual escape room together.",
+            "Create a shared playlist of your favorite songs."
+        ];
+
+        function generateDateIdea() {
+            const dateIdeaElem = document.getElementById('dateIdea');
+            const randomIndex = Math.floor(Math.random() * dateIdeas.length);
+            dateIdeaElem.textContent = dateIdeas[randomIndex];
+        }
+
+        // Function 4: Love Countdown
+        function setCountdown() {
+            const targetDateInput = document.getElementById('targetDate');
+            const countdownResult = document.getElementById('countdownResult');
+            const targetDate = new Date(targetDateInput.value);
+
+            if (isNaN(targetDate.getTime())) {
+                countdownResult.textContent = "Please select a valid date.";
+                return;
+            }
+
+            localStorage.setItem('loveCountdownTarget', targetDate.toISOString());
+            startCountdown();
+        }
+
+        function startCountdown() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval); // Clear any existing interval
+            }
+
+            const countdownResult = document.getElementById('countdownResult');
+            const storedTarget = localStorage.getItem('loveCountdownTarget');
+
+            if (!storedTarget) {
+                countdownResult.textContent = "No special date set yet.";
+                return;
+            }
+
+            const targetDate = new Date(storedTarget);
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetDate.getTime() - now;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownResult.textContent = "The special day is here! ❤️";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownResult.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            updateCountdown(); // Call immediately to display current time
+            countdownInterval = setInterval(updateCountdown, 1000); // Update every second
+        }
+
+        // Function 5: Our Memories
+        function addMemory() {
+            const memoryInput = document.getElementById('memoryInput');
+            const memoryList = document.getElementById('memoryList');
+            const memoryText = memoryInput.value.trim();
+
+            if (memoryText) {
+                const li = document.createElement('li');
+                const now = new Date();
+                const dateString = now.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                li.innerHTML = `${memoryText} <small>(${dateString})</small>`;
+                memoryList.prepend(li); // Add new memory to the top of the list
+                memoryInput.value = ''; // Clear input field
+            }
+        }
     </script>
 </body>
 </html>
+```
