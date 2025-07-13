@@ -1,0 +1,541 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;700&display=swap'); /* Fallback will be sans-serif */
+
+        :root {
+            --netflix-red: #E50914;
+            --dark-background: #141414;
+            --text-color: #E5E5E5;
+            --light-grey: #AFAFAF;
+            --font-stack: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--dark-background);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll from rows */
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0));
+            transition: background-color 0.3s ease;
+        }
+
+        .header.scrolled {
+            background-color: var(--dark-background);
+        }
+
+        .logo {
+            color: var(--netflix-red);
+            font-size: 2.2rem;
+            font-weight: 700;
+            user-select: none;
+        }
+
+        .nav-links ul {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--light-grey);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-actions svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-color);
+            cursor: pointer;
+        }
+        
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background-color: #888; /* Placeholder for profile image */
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh; /* Adjust as needed */
+            background-image: url('https://images.unsplash.com/photo-1542204655-b4618a8f1dd7?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(20,20,20,1) 0%, rgba(20,20,20,0) 50%, rgba(0,0,0,0.5) 100%);
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .hero-button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .hero-button.play {
+            background-color: var(--text-color);
+            color: var(--dark-background);
+        }
+
+        .hero-button.play:hover {
+            background-color: rgba(255,255,255,0.8);
+        }
+
+        .hero-button.more-info {
+            background-color: rgba(109,109,110,0.7);
+            color: var(--text-color);
+        }
+
+        .hero-button.more-info:hover {
+            background-color: rgba(109,109,110,0.5);
+        }
+
+        .hero-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .hero-button.play svg {
+            fill: var(--dark-background);
+        }
+        .hero-button.more-info svg {
+            fill: var(--text-color);
+        }
+
+        /* Movie Rows */
+        .movie-row-section {
+            position: relative;
+            z-index: 50; /* Above hero section bottom gradient */
+            padding: 40px 0;
+            margin-top: -80px; /* Pull rows up to overlap hero gradient */
+        }
+
+        .movie-row {
+            margin-bottom: 40px;
+            padding-left: 60px; /* Align with header/hero padding */
+        }
+
+        .row-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            padding-right: 60px; /* Ensure space for title */
+        }
+
+        .row-cards {
+            display: flex;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+            padding-bottom: 15px; /* Space for scrollbar */
+            /* Hide scrollbar for WebKit browsers */
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .row-cards::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        .card {
+            flex: 0 0 auto; /* Do not grow, do not shrink, base on content */
+            width: 250px; /* Standard card width */
+            height: 375px; /* Standard 2:3 aspect ratio */
+            margin-right: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease, z-index 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .card:hover {
+            transform: scale(1.08);
+            z-index: 10; /* Bring hovered card to front */
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 60px;
+            margin-top: 50px;
+            color: var(--light-grey);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--light-grey);
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-color);
+        }
+
+        .footer p {
+            margin-top: 20px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            .hero-description {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .header, .hero, .movie-row-section {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-description {
+                font-size: 1rem;
+            }
+            .nav-links ul {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header, .hero, .movie-row-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .logo {
+                font-size: 1.8rem;
+            }
+            .nav-links {
+                display: none; /* Hide main nav links on smaller screens */
+            }
+            .hero {
+                height: 70vh;
+                padding-top: 80px; /* Make space for fixed header */
+            }
+            .hero-title {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+            .hero-description {
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .hero-button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            .row-title {
+                font-size: 1.3rem;
+            }
+            .card {
+                width: 180px;
+                height: 270px;
+            }
+            .footer-links {
+                gap: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 15px 15px;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .header-actions {
+                gap: 10px;
+            }
+            .hero {
+                padding-left: 15px;
+                padding-right: 15px;
+                text-align: center;
+                justify-content: center;
+            }
+            .hero-content {
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-description {
+                font-size: 0.8rem;
+                -webkit-line-clamp: 4;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hero-button {
+                width: 100%;
+                justify-content: center;
+            }
+            .movie-row-section {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            .movie-row {
+                padding-left: 0;
+            }
+            .row-cards {
+                padding-left: 0;
+            }
+            .card {
+                width: 150px;
+                height: 225px;
+            }
+            .footer {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">NETFLIX</div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">TV Shows</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">New & Popular</a></li>
+                <li><a href="#">My List</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <!-- Search Icon -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19ZM11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17ZM21 21L16.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="profile-icon"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">The Witcher</h1>
+                <p class="hero-description">Geralt of Rivia, a mutated monster-hunter for hire, journeys toward his destiny in a turbulent world where people often prove more wicked than beasts.</p>
+                <div class="hero-buttons">
+                    <button class="hero-button play">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                        </svg>
+                        Play
+                    </button>
+                    <button class="hero-button more-info">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="currentColor"/>
+                        </svg>
+                        More Info
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="movie-row-section">
+            <div class="movie-row">
+                <h2 class="row-title">Trending Now</h2>
+                <div class="row-cards">
+                    <!-- Example Cards - dynamically generate or repeat -->
+                    <div class="card"><img src="https://picsum.photos/id/20/300/450" alt="Movie Poster 1" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/21/300/450" alt="Movie Poster 2" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/22/300/450" alt="Movie Poster 3" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/23/300/450" alt="Movie Poster 4" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/24/300/450" alt="Movie Poster 5" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/25/300/450" alt="Movie Poster 6" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/26/300/450" alt="Movie Poster 7" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/27/300/450" alt="Movie Poster 8" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/28/300/450" alt="Movie Poster 9" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/29/300/450" alt="Movie Poster 10" class="card-img"></div>
+                </div>
+            </div>
+
+            <div class="movie-row">
+                <h2 class="row-title">Netflix Originals</h2>
+                <div class="row-cards">
+                    <div class="card"><img src="https://picsum.photos/id/30/300/450" alt="Movie Poster 11" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/31/300/450" alt="Movie Poster 12" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/32/300/450" alt="Movie Poster 13" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/33/300/450" alt="Movie Poster 14" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/34/300/450" alt="Movie Poster 15" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/35/300/450" alt="Movie Poster 16" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/36/300/450" alt="Movie Poster 17" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/37/300/450" alt="Movie Poster 18" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/38/300/450" alt="Movie Poster 19" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/39/300/450" alt="Movie Poster 20" class="card-img"></div>
+                </div>
+            </div>
+
+            <div class="movie-row">
+                <h2 class="row-title">Watch It Again</h2>
+                <div class="row-cards">
+                    <div class="card"><img src="https://picsum.photos/id/40/300/450" alt="Movie Poster 21" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/41/300/450" alt="Movie Poster 22" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/42/300/450" alt="Movie Poster 23" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/43/300/450" alt="Movie Poster 24" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/44/300/450" alt="Movie Poster 25" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/45/300/450" alt="Movie Poster 26" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/46/300/450" alt="Movie Poster 27" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/47/300/450" alt="Movie Poster 28" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/48/300/450" alt="Movie Poster 29" class="card-img"></div>
+                    <div class="card"><img src="https://picsum.photos/id/49/300/450" alt="Movie Poster 30" class="card-img"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Audio Description</a>
+            <a href="#">Help Center</a>
+            <a href="#">Gift Cards</a>
+            <a href="#">Media Center</a>
+            <a href="#">Investor Relations</a>
+            <a href="#">Jobs</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Privacy</a>
+            <a href="#">Legal Notices</a>
+            <a href="#">Cookie Preferences</a>
+            <a href="#">Corporate Information</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <p>&copy; 2023 Netflix Clone, Inc.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('.header');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { // Adjust scroll threshold as needed
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```

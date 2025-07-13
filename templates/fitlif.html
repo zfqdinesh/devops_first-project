@@ -1,0 +1,550 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Your Journey to a Healthier You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4CAF50; /* Green */
+            --primary-dark: #388E3C;
+            --secondary-color: #FFC107; /* Amber */
+            --text-dark: #333;
+            --text-light: #fff;
+            --bg-light: #f9f9f9;
+            --bg-dark: #2c3e50; /* Dark blue/grey */
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--text-light);
+            color: var(--text-dark);
+            padding: 20px 0;
+            box-shadow: var(--shadow-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            justify-content: space-between;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-dark);
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1549060287-c104e135a596?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            color: var(--text-light);
+            text-align: center;
+            padding: 100px 0;
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: var(--shadow-medium);
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .section:nth-of-type(even) {
+            background: var(--bg-light);
+        }
+        .section:nth-of-type(odd) {
+            background: var(--text-light);
+        }
+
+
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-item {
+            background: var(--text-light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-item .icon {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Testimonial Section */
+        .testimonials {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .testimonial-item {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.3em;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .testimonial-item::before {
+            content: "“";
+            font-size: 6em;
+            color: rgba(255, 255, 255, 0.2);
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .testimonial-item p {
+            margin-bottom: 20px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .testimonial-item cite {
+            display: block;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        /* Call to Action Section */
+        .cta {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links li {
+            margin: 0 15px;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                right: 20px;
+                top: 25px;
+            }
+
+            .menu-toggle.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .section h2 {
+                font-size: 2em;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-item {
+                padding: 20px;
+            }
+
+            .testimonial-item {
+                font-size: 1em;
+            }
+
+            .testimonial-item::before {
+                font-size: 4em;
+                top: -20px;
+            }
+
+            .cta h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 80px 0;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 0.9em;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .section h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">FitLife</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Unlock Your Full Potential with FitLife</h1>
+            <p>Personalized workouts, nutrition tracking, and expert guidance at your fingertips. Start your journey to a healthier, stronger you today!</p>
+            <a href="#download" class="btn">Start Your Free Trial</a>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <div class="container">
+            <h2>Core Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-dumbbell"></i></div>
+                    <h3>Customized Workouts</h3>
+                    <p>AI-powered workout plans tailored to your goals, fitness level, and available equipment.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-apple-alt"></i></div>
+                    <h3>Nutrition Tracking</h3>
+                    <p>Log meals, track macros, and get personalized dietary recommendations to fuel your body right.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Progress Monitoring</h3>
+                    <p>Visualize your journey with detailed stats, graphs, and milestone tracking to stay motivated.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-user-friends"></i></div>
+                    <h3>Expert Guidance</h3>
+                    <p>Access a community of users and connect with certified trainers for professional advice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial-item">
+                <p>"FitLife changed my life! I've never been more consistent and motivated. The personalized workouts are a game-changer, and tracking my progress keeps me accountable. Highly recommend!"</p>
+                <cite>- Jessica L., Fitness Enthusiast</cite>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="download">
+        <div class="container">
+            <h2>Ready to Transform Your Life?</h2>
+            <p>Join thousands of users who are achieving their fitness goals with FitLife. Download the app today and begin your journey to a healthier, stronger, and happier you!</p>
+            <a href="#" class="btn" style="background: var(--secondary-color); margin-right: 15px;">
+                <i class="fab fa-apple"></i> Download on the App Store
+            </a>
+            <a href="#" class="btn" style="background: var(--secondary-color);">
+                <i class="fab fa-google-play"></i> Get it on Google Play
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 FitLife App. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+
+            mobileMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    const offsetTop = targetElement.offsetTop;
+
+                    window.scrollTo({
+                        top: offsetTop - (document.querySelector('header').offsetHeight - 1), // Adjust for fixed header
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu after clicking a link
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+```

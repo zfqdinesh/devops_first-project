@@ -1,0 +1,502 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Journey</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(to bottom, #fce4ec, #f8bbd0); /* Soft pink gradient */
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #e91e63; /* Deep pink */
+            color: white;
+            padding: 1.5rem 0;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Georgia', serif; /* Elegant serif */
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #d81b60; /* Darker deep pink */
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-family: 'Georgia', serif;
+            font-size: 1.8rem;
+        }
+
+        /* Navigation styles */
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color: #fce4ec; /* Lighter pink */
+            padding: 0.8rem;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background-color: #ff80ab; /* Medium pink */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background-color: #e91e63; /* Deep pink */
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background-color: #d81b60; /* Darker deep pink */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Main content area */
+        main {
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            margin-bottom: 20px;
+            flex-grow: 1; /* Allows main content to expand */
+        }
+
+        .content {
+            display: none;
+            text-align: center;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Form elements and results */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px 15px;
+            border: 1px solid #ff80ab;
+            border-radius: 25px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            border-color: #d81b60;
+            box-shadow: 0 0 8px rgba(216, 27, 96, 0.4);
+        }
+
+        button {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #c2185b;
+            transform: translateY(-2px);
+        }
+
+        .result {
+            font-size: 1.3rem;
+            color: #4a148c; /* Dark purple for results */
+            font-weight: bold;
+            margin-top: 25px;
+            min-height: 30px; /* To prevent layout shift */
+        }
+
+        /* Memory list specific styles */
+        #memoryList {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #memoryList li {
+            background-color: #fff3e0; /* Light orange for list items */
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+        }
+
+        #memoryList li small {
+            color: #777;
+            font-size: 0.85em;
+        }
+
+        /* Footer styles */
+        footer {
+            margin-top: auto; /* Push footer to the bottom */
+            padding: 15px 0;
+            width: 100%;
+            background-color: #e91e63;
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 10px;
+                gap: 5px;
+            }
+
+            .nav-btn {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            main {
+                width: 95%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+
+            input[type="text"],
+            input[type="date"] {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .result {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our Love Journey ❤️</h1>
+    </header>
+    <nav>
+        <button class="nav-btn active" data-target="calculator">Love Calculator</button>
+        <button class="nav-btn" data-target="messages">Love Messages</button>
+        <button class="nav-btn" data-target="dates">Date Ideas</button>
+        <button class="nav-btn" data-target="countdown">Love Countdown</button>
+        <button class="nav-btn" data-target="memories">Our Memories</button>
+    </nav>
+    <main>
+        <!-- Love Calculator Section -->
+        <section id="calculator" class="content active">
+            <h2>Love Calculator</h2>
+            <div class="input-group">
+                <input type="text" id="name1" placeholder="Your Name">
+                <input type="text" id="name2" placeholder="Partner's Name">
+                <button id="calculateLove">Calculate Love</button>
+            </div>
+            <p id="loveResult" class="result"></p>
+        </section>
+
+        <!-- Love Messages Section -->
+        <section id="messages" class="content">
+            <h2>Love Messages</h2>
+            <button id="generateMessage">Generate Message</button>
+            <p id="loveMessage" class="result"></p>
+        </section>
+
+        <!-- Date Ideas Section -->
+        <section id="dates" class="content">
+            <h2>Date Ideas</h2>
+            <button id="generateDateIdea">Get Idea</button>
+            <p id="dateIdea" class="result"></p>
+        </section>
+
+        <!-- Love Countdown Section -->
+        <section id="countdown" class="content">
+            <h2>Love Countdown</h2>
+            <div class="input-group">
+                <label for="targetDate">Set an important date:</label>
+                <input type="date" id="targetDate">
+                <button id="setCountdown">Set Date</button>
+            </div>
+            <p id="countdownResult" class="result"></p>
+        </section>
+
+        <!-- Our Memories Section -->
+        <section id="memories" class="content">
+            <h2>Our Memories</h2>
+            <div class="input-group">
+                <input type="text" id="memoryInput" placeholder="Add a sweet memory...">
+                <button id="addMemory">Add Memory</button>
+            </div>
+            <ul id="memoryList">
+                <li>First date at the park <small>(01/15/2023)</small></li>
+                <li>That unforgettable trip to the beach <small>(07/22/2023)</small></li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Made with Love</p>
+    </footer>
+
+    <script>
+        let countdownInterval;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Restore target date if stored in localStorage
+            if (localStorage.getItem('loveCountdownTarget')) {
+                document.getElementById('targetDate').value = new Date(localStorage.getItem('loveCountdownTarget')).toISOString().split('T')[0];
+            }
+
+            // Tab switching logic
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const contentSections = document.querySelectorAll('.content');
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.dataset.target;
+
+                    // Deactivate all nav buttons and content sections
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.remove('active'));
+
+                    // Activate clicked button and corresponding content section
+                    button.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+
+                    // Special handling for countdown: start/resume when tab is opened, pause when tab is left
+                    if (targetId === 'countdown') {
+                        startCountdown();
+                    } else if (countdownInterval) {
+                        clearInterval(countdownInterval); // Clear interval if leaving countdown tab
+                    }
+                });
+            });
+
+            // Simulate click on the first nav button to show its content on page load
+            document.querySelector('.nav-btn').click();
+
+            // Function specific event listeners
+            document.getElementById('calculateLove').addEventListener('click', calculateLove);
+            document.getElementById('generateMessage').addEventListener('click', generateLoveMessage);
+            document.getElementById('generateDateIdea').addEventListener('click', generateDateIdea);
+            document.getElementById('setCountdown').addEventListener('click', setCountdown);
+            document.getElementById('addMemory').addEventListener('click', addMemory);
+        });
+
+        // Function 1: Love Calculator
+        function calculateLove() {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+            const loveResult = document.getElementById('loveResult');
+
+            if (!name1 || !name2) {
+                loveResult.textContent = "Please enter both names!";
+                return;
+            }
+
+            // Simple "hashing" for a playful percentage
+            const combinedNames = (name1 + name2).toLowerCase();
+            let loveScore = 0;
+            for (let i = 0; i < combinedNames.length; i++) {
+                loveScore += combinedNames.charCodeAt(i);
+            }
+
+            const percentage = (loveScore % 101); // Percentage between 0-100
+
+            let message = `The love percentage between ${name1} and ${name2} is ${percentage}%! `;
+
+            if (percentage >= 80) {
+                message += "A perfect match! ❤️";
+            } else if (percentage >= 50) {
+                message += "A strong connection! 🥰";
+            } else {
+                message += "Keep working on it! 😉";
+            }
+            loveResult.textContent = message;
+        }
+
+        // Function 2: Love Message Generator
+        const loveMessages = [
+            "You are my sunshine, my only sunshine.",
+            "Every moment with you is a treasure.",
+            "My heart belongs to you, always and forever.",
+            "I fall in love with you more every single day.",
+            "You make my world a beautiful place.",
+            "You're the missing piece to my puzzle.",
+            "Being with you feels like home.",
+            "I never knew what love was until I met you.",
+            "You're simply the best.",
+            "Forever grateful for you.",
+            "You complete me.",
+            "My love for you grows stronger with each passing day.",
+            "You are my greatest adventure."
+        ];
+
+        function generateLoveMessage() {
+            const loveMessageElem = document.getElementById('loveMessage');
+            const randomIndex = Math.floor(Math.random() * loveMessages.length);
+            loveMessageElem.textContent = loveMessages[randomIndex];
+        }
+
+        // Function 3: Date Idea Generator
+        const dateIdeas = [
+            "Have a romantic picnic in the park.",
+            "Cook a new recipe together at home.",
+            "Go for a scenic hike or nature walk.",
+            "Have a board game night with snacks.",
+            "Visit a local museum or art gallery.",
+            "Go stargazing on a clear night.",
+            "Build a fort and watch a movie inside it.",
+            "Have a themed movie marathon night.",
+            "Go rollerblading or ice skating.",
+            "Visit a local farmers market and cook a meal with your findings.",
+            "Have a DIY spa night at home.",
+            "Go for a bike ride along a scenic trail.",
+            "Attend a live music event or concert.",
+            "Have a cozy coffee shop date.",
+            "Go fruit picking (seasonal).",
+            "Try a virtual escape room together.",
+            "Create a shared playlist of your favorite songs."
+        ];
+
+        function generateDateIdea() {
+            const dateIdeaElem = document.getElementById('dateIdea');
+            const randomIndex = Math.floor(Math.random() * dateIdeas.length);
+            dateIdeaElem.textContent = dateIdeas[randomIndex];
+        }
+
+        // Function 4: Love Countdown
+        function setCountdown() {
+            const targetDateInput = document.getElementById('targetDate');
+            const countdownResult = document.getElementById('countdownResult');
+            const targetDate = new Date(targetDateInput.value);
+
+            if (isNaN(targetDate.getTime())) {
+                countdownResult.textContent = "Please select a valid date.";
+                return;
+            }
+
+            localStorage.setItem('loveCountdownTarget', targetDate.toISOString());
+            startCountdown();
+        }
+
+        function startCountdown() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval); // Clear any existing interval
+            }
+
+            const countdownResult = document.getElementById('countdownResult');
+            const storedTarget = localStorage.getItem('loveCountdownTarget');
+
+            if (!storedTarget) {
+                countdownResult.textContent = "No special date set yet.";
+                return;
+            }
+
+            const targetDate = new Date(storedTarget);
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetDate.getTime() - now;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownResult.textContent = "The special day is here! ❤️";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownResult.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            updateCountdown(); // Call immediately to display current time
+            countdownInterval = setInterval(updateCountdown, 1000); // Update every second
+        }
+
+        // Function 5: Our Memories
+        function addMemory() {
+            const memoryInput = document.getElementById('memoryInput');
+            const memoryList = document.getElementById('memoryList');
+            const memoryText = memoryInput.value.trim();
+
+            if (memoryText) {
+                const li = document.createElement('li');
+                const now = new Date();
+                const dateString = now.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                li.innerHTML = `${memoryText} <small>(${dateString})</small>`;
+                memoryList.prepend(li); // Add new memory to the top of the list
+                memoryInput.value = ''; // Clear input field
+            }
+        }
+    </script>
+</body>
+</html>
+```

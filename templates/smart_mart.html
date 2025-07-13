@@ -1,0 +1,482 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JioMart Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --primary-dark-blue: #0056b3;
+            --accent-red: #dc3545;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --border-color: #ddd;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark-blue));
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-section .btn {
+            background-color: var(--accent-red);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .hero-section .btn:hover {
+            background-color: #c82333; /* Darker red */
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            background-color: var(--white);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .category-list a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .category-list a:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Product Grid */
+        .product-grid-section h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: var(--primary-blue);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #f0f0f0; /* Placeholder background */
+        }
+
+        .product-info {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .product-info p {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .product-info button {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .product-info button:hover {
+            background-color: var(--primary-dark-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 2.5rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+                justify-content: center;
+                width: 100%;
+                gap: 1rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
+            .product-card img {
+                height: 150px;
+            }
+
+            .product-info h3 {
+                font-size: 1rem;
+            }
+
+            .product-info p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .hero-section {
+                padding: 3rem 0;
+            }
+
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .category-list {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Basic Icon Placeholder (replace with actual icons if available) */
+        .icon-cart::before { content: "🛒 "; }
+        .icon-signin::before { content: "👤 "; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">JioMart Clone</a>
+            <div class="search-bar">
+                <input type="text" placeholder="Search products, brands and more...">
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="icon-signin">Sign In</a>
+                <a href="#" class="icon-cart">Cart</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <h1>Shop Smart, Shop JioMart</h1>
+                <p>Delivering fresh groceries & more to your doorstep.</p>
+                <a href="#" class="btn">Shop Now</a>
+            </div>
+        </section>
+
+        <section class="category-nav">
+            <div class="container">
+                <div class="category-list">
+                    <a href="#">Groceries</a>
+                    <a href="#">Electronics</a>
+                    <a href="#">Fashion</a>
+                    <a href="#">Home & Kitchen</a>
+                    <a href="#">Beauty</a>
+                    <a href="#">Sports</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-grid-section">
+            <div class="container">
+                <h2>Popular Products</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Fresh Apples">
+                        <div class="product-info">
+                            <h3>Fresh Apples (1kg)</h3>
+                            <p>₹180</p>
+                            <button onclick="addToCart('Fresh Apples', 180)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Amul Milk">
+                        <div class="product-info">
+                            <h3>Amul Gold Milk (1L)</h3>
+                            <p>₹66</p>
+                            <button onclick="addToCart('Amul Gold Milk', 66)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Surf Excel Detergent">
+                        <div class="product-info">
+                            <h3>Surf Excel Matic (2kg)</h3>
+                            <p>₹320</p>
+                            <button onclick="addToCart('Surf Excel Detergent', 320)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Basmati Rice">
+                        <div class="product-info">
+                            <h3>India Gate Basmati Rice (5kg)</h3>
+                            <p>₹599</p>
+                            <button onclick="addToCart('India Gate Basmati Rice', 599)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Maggi Noodles">
+                        <div class="product-info">
+                            <h3>Maggi 2-Min Noodles (Pack of 6)</h3>
+                            <p>₹96</p>
+                            <button onclick="addToCart('Maggi Noodles', 96)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Tata Salt">
+                        <div class="product-info">
+                            <h3>Tata Salt (1kg)</h3>
+                            <p>₹25</p>
+                            <button onclick="addToCart('Tata Salt', 25)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Colgate Toothpaste">
+                        <div class="product-info">
+                            <h3>Colgate Toothpaste (150g)</h3>
+                            <p>₹85</p>
+                            <button onclick="addToCart('Colgate Toothpaste', 85)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/ADD8E6/FFFFFF?text=Product+Image" alt="Biscuits">
+                        <div class="product-info">
+                            <h3>Parle-G Biscuits (250g)</h3>
+                            <p>₹20</p>
+                            <button onclick="addToCart('Parle-G Biscuits', 20)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">FAQs</a>
+            </div>
+            <p>&copy; 2023 JioMart Clone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function addToCart(productName, price) {
+            alert(`"${productName}" (₹${price}) has been added to your cart! (This is a clone, no actual functionality)`);
+        }
+    </script>
+</body>
+</html>
+```
