@@ -5,6 +5,6 @@ copy requirement.txt requirement.txt
 copy templates/  templates/
 run yum install python3 -y && pip3 install -r requirement.txt 
 
-cmd ["python3" ,"app.py"]
+ENTRYPOINT ["python3" ,"app.py"]
 
 
